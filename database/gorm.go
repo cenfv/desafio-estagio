@@ -1,4 +1,4 @@
-package initializers
+package database
 
 import (
 	"log"
@@ -10,12 +10,12 @@ import (
 
 var DB *gorm.DB
 
-func ConnectToDB() {
+func SetupDatabase() {
 	var err error
 	dsn := os.Getenv("DB_URL")
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatal("Failed to connect to DataBase")
+		log.Fatal("Failed to Setup Database")
 	}
 }
