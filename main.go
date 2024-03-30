@@ -33,5 +33,11 @@ func main() {
 	r.PUT("/quest/:id", controllers.UpdateQuest)
 	r.DELETE("/quest/:id", controllers.DeleteQuest)
 
+	r.GET("/guild", controllers.GetGuilds)
+	r.GET("/guild/:id", controllers.GetGuild)
+	r.POST("/guild", controllers.CreateGuild)
+	r.PUT("/guild/:id", controllers.UpdateGuild)
+	r.DELETE("/guild/:id", controllers.DeleteGuild)
+
 	r.Run()
 }
