@@ -40,7 +40,7 @@ func CreateGuild(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, res)
+	context.JSON(http.StatusCreated, res)
 }
 func UpdateGuild(context *gin.Context) {
 	var guild struct {

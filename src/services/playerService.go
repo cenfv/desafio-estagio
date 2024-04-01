@@ -21,12 +21,13 @@ func GetPlayer(id int) models.Player {
 	return player
 }
 
-func CreatePlayer(name string, email string, class string) (models.Player, error) {
+func CreatePlayer(name string, email string, password string, class string) (models.Player, error) {
 	player := models.Player{
-		Name:  name,
-		Email: email,
-		Class: class,
-		Level: 1,
+		Name:     name,
+		Email:    email,
+		Password: password,
+		Class:    class,
+		Level:    1,
 	}
 
 	res := database.DB.Create(&player)
@@ -38,15 +39,16 @@ func CreatePlayer(name string, email string, class string) (models.Player, error
 	return player, res.Error
 }
 
-func UpdatePlayer(id int, name string, email string, class string, level int, guildID int) error {
+func UpdatePlayer(id int, name string, email string, password string, class string, level int, guildID int) error {
 	var playerToUpdate models.Player
 	database.DB.First(&playerToUpdate, id)
 
 	res := database.DB.Model(&playerToUpdate).Updates(models.Player{
-		Name:  name,
-		Email: email,
-		Class: class,
-		Level: level,
+		Name:     name,
+		Email:    email,
+		Password: password,
+		Class:    class,
+		Level:    level,
 		//GuildID: guildID,
 	})
 
@@ -85,3 +87,5 @@ func JoinQuest(playerID, questID int) error {
 
 	return nil
 }
+
+var jwtKey = []byte("your_secret_key")

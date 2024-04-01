@@ -37,11 +37,11 @@ func CreateQuest(context *gin.Context) {
 	res, error := services.CreateQuest(quest.Name, quest.Description, quest.Difficulty, quest.Reward)
 
 	if error != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 
-	context.JSON(http.StatusOK, res)
+	context.JSON(http.StatusCreated, res)
 }
 func UpdateQuest(context *gin.Context) {
 	var quest struct {
@@ -60,7 +60,7 @@ func UpdateQuest(context *gin.Context) {
 
 	err = services.UpdateQuest(id, quest.Name, quest.Description, quest.Difficulty, quest.Reward)
 	if err != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Quest updated successfully"})
@@ -76,7 +76,7 @@ func DeleteQuest(context *gin.Context) {
 
 	err = services.DeleteQuest(id)
 	if err != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Quest deleted successfully"})

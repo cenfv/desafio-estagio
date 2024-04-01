@@ -27,28 +27,30 @@ func GetPlayer(context *gin.Context) {
 
 func CreatePlayer(context *gin.Context) {
 	var player struct {
-		Name  string
-		Email string
-		Class string
+		Name     string
+		Email    string
+		Password string
+		Class    string
 	}
 	context.Bind(&player)
 
-	res, error := services.CreatePlayer(player.Name, player.Email, player.Class)
+	res, error := services.CreatePlayer(player.Name, player.Email, player.Password, player.Class)
 
 	if error != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 
-	context.JSON(http.StatusOK, res)
+	context.JSON(http.StatusCreated, res)
 }
 func UpdatePlayer(context *gin.Context) {
 	var player struct {
-		Name    string
-		Email   string
-		Class   string
-		Level   int
-		GuildID int
+		Name     string
+		Email    string
+		Password string
+		Class    string
+		Level    int
+		GuildID  int
 	}
 	context.Bind(&player)
 	idStr := context.Param("id")
@@ -58,9 +60,9 @@ func UpdatePlayer(context *gin.Context) {
 		return
 	}
 
-	err = services.UpdatePlayer(id, player.Name, player.Email, player.Class, player.Level, player.GuildID)
+	err = services.UpdatePlayer(id, player.Name, player.Email, player.Password, player.Class, player.Level, player.GuildID)
 	if err != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Player updated successfully"})
@@ -76,7 +78,7 @@ func DeletePlayer(context *gin.Context) {
 
 	err = services.DeletePlayer(id)
 	if err != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Player deleted successfully"})
@@ -101,7 +103,7 @@ func JoinQuestController(context *gin.Context) {
 
 	err = services.JoinQuest(playerID, questID)
 	if err != nil {
-		context.Status(400)
+		context.Status(http.StatusBadRequest)
 		return
 	}
 

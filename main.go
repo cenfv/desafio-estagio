@@ -20,24 +20,26 @@ func init() {
 func main() {
 	r := gin.Default()
 
-	r.GET("/player", controllers.GetPlayers)
-	r.GET("/player/:id", controllers.GetPlayer)
-	r.POST("/player", controllers.CreatePlayer)
-	r.PUT("/player/:id", controllers.UpdatePlayer)
-	r.DELETE("/player/:id", controllers.DeletePlayer)
-	r.POST("/player/quest/join/", controllers.JoinQuestController)
+	r.POST("/login", controllers.Login)
 
-	r.GET("/quest", controllers.GetQuests)
-	r.GET("/quest/:id", controllers.GetQuest)
-	r.POST("/quest", controllers.CreateQuest)
-	r.PUT("/quest/:id", controllers.UpdateQuest)
-	r.DELETE("/quest/:id", controllers.DeleteQuest)
+	r.GET("/player", controllers.AuthMiddleware(), controllers.GetPlayers)
+	r.GET("/player/:id", controllers.AuthMiddleware(), controllers.GetPlayer)
+	r.POST("/player", controllers.AuthMiddleware(), controllers.CreatePlayer)
+	r.PUT("/player/:id", controllers.AuthMiddleware(), controllers.UpdatePlayer)
+	r.DELETE("/player/:id", controllers.AuthMiddleware(), controllers.DeletePlayer)
+	r.POST("/player/quest/join/", controllers.AuthMiddleware(), controllers.JoinQuestController)
 
-	r.GET("/guild", controllers.GetGuilds)
-	r.GET("/guild/:id", controllers.GetGuild)
-	r.POST("/guild", controllers.CreateGuild)
-	r.PUT("/guild/:id", controllers.UpdateGuild)
-	r.DELETE("/guild/:id", controllers.DeleteGuild)
+	r.GET("/quest", controllers.AuthMiddleware(), controllers.GetQuests)
+	r.GET("/quest/:id", controllers.AuthMiddleware(), controllers.GetQuest)
+	r.POST("/quest", controllers.AuthMiddleware(), controllers.CreateQuest)
+	r.PUT("/quest/:id", controllers.AuthMiddleware(), controllers.UpdateQuest)
+	r.DELETE("/quest/:id", controllers.AuthMiddleware(), controllers.DeleteQuest)
+
+	r.GET("/guild", controllers.AuthMiddleware(), controllers.GetGuilds)
+	r.GET("/guild/:id", controllers.AuthMiddleware(), controllers.GetGuild)
+	r.POST("/guild", controllers.AuthMiddleware(), controllers.CreateGuild)
+	r.PUT("/guild/:id", controllers.AuthMiddleware(), controllers.UpdateGuild)
+	r.DELETE("/guild/:id", controllers.AuthMiddleware(), controllers.DeleteGuild)
 
 	r.Run()
 }
