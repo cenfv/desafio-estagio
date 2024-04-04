@@ -1,59 +1,30 @@
-# Desafio Técnico - Temática RPG
+# Dev Backend (Golang) - O Guardião dos Dados
 
-Bem-vindos ao nosso processo seletivo para vagas de estágio em desenvolvimento! Estamos procurando talentos apaixonados por tecnologia e inovação, prontos para enfrentar desafios no mundo do desenvolvimento de software. Para tornar este processo mais interativo e divertido, elaboramos desafios técnicos inspirados no universo dos RPGs.
+Este projeto é uma API RESTful desenvolvida em Golang, utilizando o framework Gin Gonic e o ORM GORM. A API gerencia missões de aventura para uma guilda de aventureiros.
 
-### IMPORTANTE: Por favor, faça o teste com o maior capricho possível, visto que é através dos detalhes que poderemos avaliar sua experiência e senioridade
+## Configuração e Execução
+Certifique-se de ter o Go instalado em sua máquina. Você pode baixá-lo em golang.org.
+Clone este repositório para sua máquina local.
+Instale as dependências do projeto.
+Configure as variáveis de ambiente no arquivo .env conforme necessário. Você pode usar o arquivo .env como modelo, nele contém o endereço banco de dados préviamente configurado, não possuindo informações sensíveis.
 
-## Desafios
+Execute o seguinte comando para iniciar o servidor:
+```
+go run main.go
+```
+A API estará disponível em http://localhost:8080.
 
-Abaixo você encontrará os desafios para dev backend e dev frontend, faça o teste que for mais confortável para você, note que o teste de frontend ainda inclui mais uma escolha: mobile ou web, ambos usando o framework React.
+## Documentação
+A documentação da API foi gerada automaticamente usando o Swagger. Para acessar a documentação, inicie o servidor e navegue até [http://localhost:8080/swagger/index.html](http://localhost:8080/docs/index.html) em seu navegador.
 
-### Dev Backend (Golang) - O Guardião dos Dados
-![Guardião dos dados](https://digitalsys-cdn.nyc3.cdn.digitaloceanspaces.com/desafio-estagio/guardiao-dados-2.png)
+Para acessar os endpoints autenticados, clique no botão "Authorize" e insira o token de autenticação. 
+Você pode obter o token na rota de autenticação http://localhost:8080/login, utilizando o e-mail "admin@admin.com" e a senha "admin". Digite "Bearer" seguido do token na caixa de texto para autenticar suas solicitações.
 
-#### Contexto
-Você é um Guardião dos Dados, encarregado de desenvolver uma infraestrutura segura para gerenciar as informações cruciais do reino. Utilizando Golang, juntamente com Gin Gonic e GORM, você deverá criar uma API RESTful que administre as missões de uma guilda de aventureiros.
+Você também pode utilizar o seguinte corpo JSON, através de uma requisição POST para a rota http://localhost:8080/login
 
-#### Missão
-Desenvolver uma API RESTful usando **Gin Gonic** que permita operações CRUD em missões de aventura. Utilize **GORM** para a interação com o banco de dados, facilitando a persistência e recuperação dos dados.
-
-##### Requisitos Específicos
-- **Framework:** Utilize Gin Gonic para facilitar a criação da API.
-- **ORM:** Use GORM para manipulação dos dados no banco de dados.
-- **Autenticação:** Implemente autenticação básica para proteger a API.
-- **Documentação:** Documente os endpoints e exemplos de uso da API.
-- **Bônus:** Implemente testes unitários e de integração.
-
-### Dev Frontend (ReactJS/React Native) - O Artesão de Ilusões
-![Artesão das Ilusões](https://digitalsys-cdn.nyc3.cdn.digitaloceanspaces.com/desafio-estagio/artesao-ilusoes-2.png)
-#### Contexto
-Como um Artesão de Ilusões, você cria ambientes e objetos encantadores. Sua tarefa é desenvolver uma aplicação frontend que apresente um catálogo de aventuras e personagens de um RPG, demonstrando suas habilidades em criar interfaces ricas e interativas.
-
-#### Missão
-Desenvolver uma aplicação frontend que exiba uma lista de missões e personagens, utilizando ReactJS para web ou React Native para mobile. A aplicação deve permitir ao usuário visualizar detalhes de cada missão e personagem, incluindo descrição, dificuldade e status.
-
-##### Requisitos Específicos
-- Utilizar ReactJS para web ou React Native para mobile.
-- A aplicação deve ser responsiva e oferecer uma boa experiência de usuário em diferentes dispositivos.
-- Implementar navegação entre diferentes telas ou seções da aplicação.
-- **Bônus:** Utilizar animações ou transições para melhorar a interatividade da interface.
-
-## Orientações para Submissão
-
-1. **Fork este repositório** para sua conta no GitHub.
-2. **Crie uma branch específica** para o desafio que você está desenvolvendo (`backend-golang` ou `frontend-react`).
-3. **Desenvolva o projeto** seguindo os requisitos do desafio escolhido.
-4. **Documente** no `README.md` as instruções de como configurar e executar seu projeto, além de exemplos de uso da API ou da interface, conforme aplicável.
-5. **Abra um Pull Request** com suas alterações, incluindo no título do PR o desafio que você está submetendo e no corpo do PR qualquer observação ou comentário relevante sobre seu projeto.
-
-### Critérios de Avaliação
-
-- **Qualidade do código:** legibilidade, organização, aplicação de boas práticas.
-- **Funcionalidade:** todas as funcionalidades requisitadas devem estar implementadas e funcionando conforme esperado.
-- **Documentação:** clareza nas instruções de configuração e uso do projeto.
-- **Extras:** qualquer funcionalidade ou característica extra será considerada positivamente.
-
-### Deadline (Prazo de entrega)
-- **Não existe prazo determinado para a entrega do projeto:** entretanto, recomendamos que faça-o tão logo possível,  com certeza vamos ler e avaliar seu código, mas suponhamos que você só consiga nos enviar seu teste após outros 5 candidatos serem aprovados no teste e nas demais fases, isso significa que seu teste precisará ser MUITO bom para abrirmos uma exceção e colocar você como o nosso "sexto elemento" =) 
-
-Boa sorte! Estamos ansiosos para ver as soluções incríveis que você irá criar.
+```
+{
+    "email":"admin@admin.com",
+    "password":"admin"
+}
+```
