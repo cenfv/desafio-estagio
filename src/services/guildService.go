@@ -1,6 +1,8 @@
 package services
 
 import (
+	"errors"
+
 	"github.com/desafio-estagio/database"
 	"github.com/desafio-estagio/src/models"
 )
@@ -75,6 +77,49 @@ func DeleteGuild(id int) error {
 
 	if res.Error != nil {
 		return res.Error
+	}
+
+	return nil
+}
+
+func KickPlayerService(playerID int, guildID int) error {
+	var player models.Player
+	err := database.DB.First(&player, playerID).Error
+	if err != nil {
+		return errors.New("player not found")
+	}
+
+	var guild models.Guild
+	err = database.DB.Preload("Members").First(&guild, guildID).Error
+	if err != nil {
+		return errors.New("guild not found")
+	}
+
+	found := false
+	for _, member := range guild.Members {
+		if member.ID == uint(playerID) {
+			found = true
+			break
+		}
+	}
+	if !found {
+		return errors.New("player not in guild")
+	}
+
+	err = database.DB.Model(&guild).Association("Members").Delete(&player)
+	if err != nil {
+		return err
+	}
+
+	err = database.DB.Save(&guild).Error
+	if err != nil {
+		return err
+	}
+
+	player.GuildID = 0
+	err = database.DB.Save(&player).Error
+	if err != nil {
+		return err
 	}
 
 	return nil

@@ -1,0 +1,484 @@
+definitions:
+  controllers.Credentials:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  controllers.Guild:
+    properties:
+      description:
+        type: string
+      members:
+        items:
+          properties:
+            id:
+              type: integer
+          type: object
+        type: array
+      name:
+        type: string
+    type: object
+  controllers.Player:
+    properties:
+      class:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  controllers.Quest:
+    properties:
+      description:
+        type: string
+      difficulty:
+        type: integer
+      name:
+        type: string
+      reward:
+        type: string
+    type: object
+  controllers.UPlayer:
+    properties:
+      class:
+        type: string
+      email:
+        type: string
+      guildID:
+        type: integer
+      level:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact:
+    name: API Support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /guild:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all guilds
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Get all guilds
+      tags:
+      - guilds
+    post:
+      consumes:
+      - application/json
+      description: Create a new guild
+      parameters:
+      - description: Guild object
+        in: body
+        name: guild
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Guild'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      security:
+      - Bearer: []
+      summary: Create a new guild
+      tags:
+      - guilds
+  /guild/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a guild by its ID
+      parameters:
+      - description: Guild ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Delete a guild
+      tags:
+      - guilds
+    get:
+      consumes:
+      - application/json
+      description: Get a guild by its ID
+      parameters:
+      - description: Guild ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Get a guild by ID
+      tags:
+      - guilds
+    put:
+      consumes:
+      - application/json
+      description: Update an existing guild
+      parameters:
+      - description: Guild ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Guild object
+        in: body
+        name: guild
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Guild'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Update a guild
+      tags:
+      - guilds
+  /guild/kick:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a player from a guild by player ID and guild ID
+      parameters:
+      - description: Player ID
+        in: query
+        name: player_id
+        required: true
+        type: integer
+      - description: Guild ID
+        in: query
+        name: guild_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Remove a player from a guild
+      tags:
+      - guilds
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user credentials
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Credentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      summary: Login
+      tags:
+      - auth
+  /player:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all players
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Get all players
+      tags:
+      - players
+    post:
+      consumes:
+      - application/json
+      description: Create a new player
+      parameters:
+      - description: Player object
+        in: body
+        name: player
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Player'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      security:
+      - Bearer: []
+      summary: Create a new player
+      tags:
+      - players
+  /player/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a player by its ID
+      parameters:
+      - description: Player ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Player deleted successfully
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Delete a player
+      tags:
+      - players
+    get:
+      consumes:
+      - application/json
+      description: Get a player by its ID
+      parameters:
+      - description: Player ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Get a player by ID
+      tags:
+      - players
+    put:
+      consumes:
+      - application/json
+      description: Update an existing player
+      parameters:
+      - description: Player ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Player object
+        in: body
+        name: player
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UPlayer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Update a player
+      tags:
+      - players
+  /player/guild/join/:
+    post:
+      consumes:
+      - application/json
+      description: Allows a player to join a guild
+      parameters:
+      - description: Player ID
+        in: query
+        name: player_id
+        required: true
+        type: integer
+      - description: Guild ID
+        in: query
+        name: guild_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Join a player to a guild
+      tags:
+      - players
+  /player/quest/join:
+    post:
+      consumes:
+      - application/json
+      description: Associate a player with a quest
+      parameters:
+      - description: Player ID
+        in: query
+        name: player_id
+        required: true
+        type: integer
+      - description: Quest ID
+        in: query
+        name: quest_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Player associated with the quest successfully
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Join a player to a quest
+      tags:
+      - players
+  /quests:
+    get:
+      consumes:
+      - application/json
+      description: Get all quests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: List all quests
+      tags:
+      - quests
+    post:
+      consumes:
+      - application/json
+      description: Create a new quest
+      parameters:
+      - description: Quest object
+        in: body
+        name: quest
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Quest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+      summary: Create a new quest
+      tags:
+      - quests
+  /quests/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing quest by ID
+      parameters:
+      - description: Quest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Delete an existing quest
+      tags:
+      - quests
+    get:
+      consumes:
+      - application/json
+      description: Get a quest by its ID
+      parameters:
+      - description: Quest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Get quest by ID
+      tags:
+      - quests
+    put:
+      consumes:
+      - application/json
+      description: Update an existing quest by ID
+      parameters:
+      - description: Quest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Quest object
+        in: body
+        name: quest
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Quest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Update an existing quest
+      tags:
+      - quests
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

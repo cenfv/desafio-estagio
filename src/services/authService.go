@@ -10,6 +10,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+var jwtKey = []byte("not_secret")
+
 func GenerateToken(email string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := jwt.MapClaims{
@@ -46,9 +48,11 @@ func Authenticate(email, password string) (string, error) {
 }
 
 func ValidateToken(tokenString string) (string, error) {
+	if !strings.HasPrefix(strings.ToLower(tokenString), "bearer ") {
+		return "", errors.New("invalid token format")
+	}
+	tokenString = strings.TrimSpace(tokenString[len("Bearer "):])
 
-	splitToken := strings.Split(tokenString, "Bearer ")
-	tokenString = strings.TrimSpace(splitToken[1])
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")

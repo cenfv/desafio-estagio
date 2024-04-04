@@ -88,4 +88,30 @@ func JoinQuest(playerID, questID int) error {
 	return nil
 }
 
-var jwtKey = []byte("your_secret_key")
+func JoinGuildService(playerID, guildID int) error {
+	var player models.Player
+	var guild models.Guild
+
+	res := database.DB.First(&player, playerID)
+	if res.Error != nil {
+		return errors.New("player not found")
+	}
+
+	res = database.DB.First(&guild, guildID)
+	if res.Error != nil {
+		return errors.New("guild not found")
+	}
+
+	for _, member := range guild.Members {
+		if member.ID == uint(playerID) {
+			return errors.New("player already in the guild")
+		}
+	}
+
+	res = database.DB.Model(&player).Update("GuildID", guildID)
+	if res.Error != nil {
+		return errors.New("failed to join guild")
+	}
+
+	return nil
+}

@@ -7,12 +7,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Credentials struct {
+	Email    string
+	Password string
+}
+
+// @Summary Login
+// @Description Authenticate user credentials
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param credentials body Credentials true "User credentials"
+// @Success 200
+// @Failure 401
+// @Router /login [post]
 func Login(context *gin.Context) {
-	var credentials struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
-	err := context.ShouldBindJSON(&credentials)
+	var credentials Credentials
+
+	err := context.Bind(&credentials)
 
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
