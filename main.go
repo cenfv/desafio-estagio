@@ -6,6 +6,7 @@ import (
 	"github.com/desafio-estagio/database"
 	"github.com/desafio-estagio/docs"
 	"github.com/desafio-estagio/src/controllers"
+	"github.com/desafio-estagio/src/services"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
@@ -18,6 +19,7 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 	database.SetupDatabase()
+	services.CreateInitialUser()
 }
 
 // @contact.name   API Support

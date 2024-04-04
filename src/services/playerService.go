@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/desafio-estagio/database"
 	"github.com/desafio-estagio/src/models"
@@ -114,4 +115,15 @@ func JoinGuildService(playerID, guildID int) error {
 	}
 
 	return nil
+}
+
+func CreateInitialUser() {
+	var players []models.Player
+	var playerCount int64
+	database.DB.Find(&players).Count(&playerCount)
+	if playerCount == 0 {
+		CreatePlayer("admin", "admin@admin.com", "admin", "GOD")
+	}
+	fmt.Println("Initial user created")
+
 }
